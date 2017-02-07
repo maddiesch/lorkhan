@@ -1,0 +1,22 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - spec/**/*
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 16
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
