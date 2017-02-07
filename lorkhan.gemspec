@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'lorkhan/version'
 
 Gem::Specification.new do |spec|
-  spec.name                  = 'Lorkhan'
+  spec.name                  = 'lorkhan'
   spec.version               = Lorkhan::VERSION
   spec.licenses              = ['MIT']
   spec.authors               = ['Skylar Schipper']
-  spec.email                 = ['me@skylarsch.com']
+  spec.email                 = ['skylar@pco.bz']
   spec.summary               = 'APNS HTTP/2 Client'
-  spec.homepage              = 'http://github.com/skylarsch/lorkhan'
+  spec.homepage              = 'http://github.com/ministrycentered/lorkhan'
   spec.required_ruby_version = '>=2.3.0'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
