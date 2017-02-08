@@ -31,7 +31,7 @@ module Lorkhan
       raw_response = @client.call(:post, request.path, body: request.body, headers: headers, timeout: 5)
       raise Errors::TimeoutError if raw_response.nil?
       response = Response.new(raw_response)
-      raise Errors::HTTPError.new(response) unless response.ok?
+      handle_http_error(response) unless response.ok?
       response
     end
 
@@ -43,6 +43,20 @@ module Lorkhan
 
     def url
       "https://#{host}:443"
+    end
+
+    def handle_http_error(response)
+      if response.body
+        if (reason = response.body['reason'])
+          begin
+            klass = Object.const_get("Lorkhan::Errors::Apple::#{reason}")
+            raise klass, response
+          rescue NameError
+            raise Errors::HTTPError, response
+          end
+        end
+      end
+      raise Errors::HTTPError, response
     end
   end
 end
