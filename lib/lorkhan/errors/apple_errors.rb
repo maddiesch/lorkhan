@@ -30,6 +30,35 @@ module Lorkhan
       class InternalServerError < Errors::HTTPError; end
       class ServiceUnavailable < Errors::HTTPError; end
       class Shutdown < Errors::HTTPError; end
+
+      MAPPINGS = {
+        'BadCollapseId' => BadCollapseId,
+        'BadDeviceToken' => BadDeviceToken,
+        'BadExpirationDate' => BadExpirationDate,
+        'BadMessageId' => BadMessageId,
+        'BadPriority' => BadPriority,
+        'BadTopic' => BadTopic,
+        'DeviceTokenNotForTopic' => DeviceTokenNotForTopic,
+        'DuplicateHeaders' => DuplicateHeaders,
+        'IdleTimeout' => IdleTimeout,
+        'MissingDeviceToken' => MissingDeviceToken,
+        'MissingTopic' => MissingTopic,
+        'PayloadEmpty' => PayloadEmpty,
+        'TopicDisallowed' => TopicDisallowed,
+        'ExpiredProviderToken' => ExpiredProviderToken,
+        'Forbidden' => Forbidden,
+        'InvalidProviderToken' => InvalidProviderToken,
+        'MissingProviderToken' => MissingProviderToken,
+        'BadPath' => BadPath,
+        'MethodNotAllowed' => MethodNotAllowed,
+        'Unregistered' => Unregistered,
+        'PayloadTooLarge' => PayloadTooLarge,
+        'TooManyProviderTokenUpdates' => TooManyProviderTokenUpdates,
+        'TooManyRequests' => TooManyRequests,
+        'InternalServerError' => InternalServerError,
+        'ServiceUnavailable' => ServiceUnavailable,
+        'Shutdown' => Shutdown
+      }.freeze
     end
   end
 end

@@ -23,6 +23,11 @@ module Lorkhan
       @client.join
     end
 
+    def refresh_token
+      @auth_token = nil
+      close
+    end
+
     def push(notification)
       request = Request.new(notification)
       request.validate!
@@ -48,12 +53,8 @@ module Lorkhan
     def handle_http_error(response)
       if response.body
         if (reason = response.body['reason'])
-          begin
-            klass = Object.const_get("Lorkhan::Errors::Apple::#{reason}")
-            raise klass, response
-          rescue NameError
-            raise Errors::HTTPError, response
-          end
+          klass = Lorkhan::Errors::Apple::MAPPINGS[reason]
+          raise klass, response if klass
         end
       end
       raise Errors::HTTPError, response
