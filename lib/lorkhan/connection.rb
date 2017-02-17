@@ -4,6 +4,7 @@ require 'openssl'
 module Lorkhan
   APNS_PRODUCTION_HOST  = 'api.push.apple.com'.freeze
   APNS_DEVELOPMENT_HOST = 'api.development.push.apple.com'.freeze
+  TOKEN_EXPIRE_TIME_SEC = 3300 # 55 minutes (Apple timeout in 60)
 
   class Connection
     attr_reader :host, :token
@@ -29,6 +30,7 @@ module Lorkhan
     end
 
     def push(notification)
+      check_token_should_refresh
       request = Request.new(notification)
       request.validate!
       headers = request.headers
@@ -43,7 +45,10 @@ module Lorkhan
     private
 
     def auth_token
-      @auth_token ||= token.encode
+      @auth_token ||= begin
+        @refresh_token_at = Time.now.to_i + TOKEN_EXPIRE_TIME_SEC
+        token.encode
+      end
     end
 
     def url
@@ -58,6 +63,11 @@ module Lorkhan
         end
       end
       raise Errors::HTTPError, response
+    end
+
+    def check_token_should_refresh
+      return if @refresh_token_at.nil?
+      refresh_token if Time.now.to_i >= @refresh_token_at
     end
   end
 end
