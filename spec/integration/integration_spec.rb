@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'integration' do
+describe 'integration', :env do
   let(:device_token)    { ENV['LORKHAN_TEST_DEVICE_TOKEN'] }
   let(:auth_token_path) { File.expand_path(ENV['LORKHAN_TEST_AUTH_KEY_PATH']) }
   let(:team_id)         { ENV['LORKHAN_TEST_TEAM_ID'] }
