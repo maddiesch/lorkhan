@@ -21,11 +21,14 @@ module Lorkhan
     def to_h
       {}.tap do |root|
         root[:aps] = {}.tap do |aps|
-          aps[:alert] = alert if alert
-          aps[:badge] = badge if badge
-          aps[:sound] = sound if sound
+          if content_available
+            aps['content-available'] = 1
+          else
+            aps[:alert] = alert if alert
+            aps[:badge] = badge if badge
+            aps[:sound] = sound if sound
+          end
           aps[:category] = category if category
-          aps['content-available'] = content_available if content_available
           aps['url-args'] = url_args if url_args
           aps['mutable-content'] = mutable_content if mutable_content
         end
