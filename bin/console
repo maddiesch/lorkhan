@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'lorkhan'
+require 'pry'
+
+DEVICE_TOKEN = ENV['LORKHAN_TEST_DEVICE_TOKEN']
+AUTH_TOKEN_PATH = File.expand_path(ENV['LORKHAN_TEST_AUTH_KEY_PATH'])
+TEAM_ID = ENV['LORKHAN_TEST_TEAM_ID']
+KEY_ID = ENV['LORKHAN_TEST_AUTH_KEY_ID']
+
+raise "Missing device token ENV['LORKHAN_TEST_DEVICE_TOKEN']" if DEVICE_TOKEN.nil?
+raise "Missing device token ENV['LORKHAN_TEST_AUTH_KEY_PATH']" if AUTH_TOKEN_PATH.nil?
+raise 'Missing auth token file' unless File.exist?(AUTH_TOKEN_PATH)
+raise "Missing device token ENV['LORKHAN_TEST_TEAM_ID']" if TEAM_ID.nil?
+raise "Missing device token ENV['LORKHAN_TEST_AUTH_KEY_ID']" if KEY_ID.nil?
+
+Pry.start
