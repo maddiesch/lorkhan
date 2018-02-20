@@ -3,6 +3,8 @@ require 'securerandom'
 
 module Lorkhan
   class Notification
+    DEFAULT_SOUND_NAME = 'default'.freeze
+
     attr_reader :token, :apns_id
     attr_accessor :custom_payload, :alert, :badge, :sound, :category, :content_available, :url_args, :mutable_content
     attr_accessor :expiration, :priority, :topic, :collapse_id
