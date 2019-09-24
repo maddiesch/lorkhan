@@ -59,6 +59,7 @@ module Lorkhan
       headers['authorization'] = "bearer #{auth_token}"
       raw_response = @client.call(:post, request.path, body: request.body, headers: headers, timeout: 5)
       raise Errors::TimeoutError if raw_response.nil?
+
       response = Response.new(raw_response)
       handle_http_error(response) unless response.ok?
       response
@@ -89,6 +90,7 @@ module Lorkhan
 
     def check_token_should_refresh
       return if @refresh_token_at.nil?
+
       refresh_token if Time.now.to_i >= @refresh_token_at
     end
   end
