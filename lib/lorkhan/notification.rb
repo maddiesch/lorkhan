@@ -47,9 +47,9 @@ module Lorkhan
     ##
     PRIORITY_DELIVER_BACKGROUND  = 5
 
-    attr_reader :token, :apns_id
-    attr_accessor :custom_payload, :alert, :badge, :sound, :category, :content_available, :url_args, :mutable_content
-    attr_accessor :expiration, :priority, :topic, :collapse_id
+    attr_reader :token, :apns_id, :priority, :alert, :content_available
+    attr_accessor :custom_payload, :badge, :sound, :category, :url_args, :mutable_content
+    attr_accessor :expiration, :topic, :collapse_id
 
     ##
     # Create a new notification
@@ -57,14 +57,37 @@ module Lorkhan
     # token: The Device token that the notification will be delivered to
     ##
     def initialize(token)
-      @token      = token
-      @apns_id    = SecureRandom.uuid
+      @token = token
+      @apns_id = SecureRandom.uuid
       @expiration = 0
-      @priority   = PRIORITY_DELIVER_IMMEDIATELY
+      @content_available = false
+      @priority = PRIORITY_DELIVER_IMMEDIATELY
     end
 
     def body
       JSON.dump(to_h).force_encoding(Encoding::BINARY)
+    end
+
+    def push_type
+      return 'background' if content_available == true
+
+      'alert'
+    end
+
+    def alert=(alert)
+      @alert = alert
+      if @alert
+        @content_available = false
+        @priority = PRIORITY_DELIVER_IMMEDIATELY
+      end
+    end
+
+    def content_available=(content_available)
+      @content_available = content_available
+      if content_available == true
+        @alert = nil
+        @priority = PRIORITY_DELIVER_BACKGROUND
+      end
     end
 
     def to_h

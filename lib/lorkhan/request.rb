@@ -21,6 +21,7 @@ module Lorkhan
         head['apns-priority']    = notif.priority.to_s if notif.priority
         head['apns-topic']       = notif.topic if notif.topic
         head['apns-collapse-id'] = notif.collapse_id if notif.collapse_id
+        head['apns-push-type']   = notif.push_type
       end
     end
   end
