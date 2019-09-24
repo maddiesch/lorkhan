@@ -47,6 +47,8 @@ module Lorkhan
     ##
     PRIORITY_DELIVER_BACKGROUND  = 5
 
+    DEFAULT_SOUND_NAME = 'default'.freeze
+
     attr_reader :token, :apns_id, :priority, :alert, :content_available
     attr_accessor :custom_payload, :badge, :sound, :category, :url_args, :mutable_content
     attr_accessor :expiration, :topic, :collapse_id
