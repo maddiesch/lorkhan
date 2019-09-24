@@ -24,7 +24,7 @@ xdescribe 'integration', :env do
     let(:connection) { Lorkhan::Connection.new(token: token, production: false) }
 
     it 'sends a notification' do
-      pending "This will fail without a valid device token"
+      pending 'This will fail without a valid device token'
       notif = Lorkhan::Notification.new(device_token)
       notif.alert = 'Testing'
       notif.topic = topic

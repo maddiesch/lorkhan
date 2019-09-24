@@ -46,7 +46,7 @@ describe Lorkhan::Notification do
     end
 
     it 'merges custom payload' do
-      notification.custom_payload = {foo: :bar}
+      notification.custom_payload = { foo: :bar }
       expect(notification.to_h[:foo]).to eq :bar
     end
   end

@@ -1,3 +1,7 @@
+### 2.0.0
+
+- Support for changes required by iOS 13
+
 ### 0.0.3
 
 - Sending a `content_available` push, now excludes the `alert`, `badge`, `sound` keys.
