@@ -1,4 +1,6 @@
 module Lorkhan
+  ##
+  # @private
   class Request
     attr_reader :path, :headers, :body
 

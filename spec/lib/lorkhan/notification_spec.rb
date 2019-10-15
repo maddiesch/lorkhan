@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Lorkhan::Notification do
-  let(:notification) { Lorkhan::Notification.new('token') }
+  let(:notification) { Lorkhan::Notification.new(nil, 'custom-topic', 'token') }
 
   describe '#to_h' do
     it 'creates a hash with a root aps object' do

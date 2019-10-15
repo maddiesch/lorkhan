@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Lorkhan::Request do
   context 'given an alert' do
-    let(:notification) { Lorkhan::Notification.new('token') }
+    let(:notification) { Lorkhan::Notification.new(nil, 'test-topic', 'token') }
 
     subject { Lorkhan::Request.new(notification) }
 
@@ -15,7 +15,8 @@ describe Lorkhan::Request do
         'apns-id' => notification.apns_id,
         'apns-expiration' => '0',
         'apns-priority' => '10',
-        'apns-push-type' => 'alert'
+        'apns-push-type' => 'alert',
+        'apns-topic' => 'test-topic'
       )
     end
 
@@ -26,7 +27,7 @@ describe Lorkhan::Request do
 
   context 'given a content-available' do
     let(:notification) do
-      n = Lorkhan::Notification.new('token')
+      n = Lorkhan::Notification.new(nil, 'test-topic', 'token')
       n.content_available = true
       n
     end
@@ -42,7 +43,8 @@ describe Lorkhan::Request do
         'apns-id' => notification.apns_id,
         'apns-expiration' => '0',
         'apns-priority' => '5',
-        'apns-push-type' => 'background'
+        'apns-push-type' => 'background',
+        'apns-topic' => 'test-topic'
       )
     end
 

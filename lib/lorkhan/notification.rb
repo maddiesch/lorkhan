@@ -49,18 +49,20 @@ module Lorkhan
 
     DEFAULT_SOUND_NAME = 'default'.freeze
 
-    attr_reader :token, :apns_id, :priority, :alert, :content_available
+    attr_reader :token, :apns_id, :priority, :alert, :content_available, :topic
     attr_accessor :custom_payload, :badge, :sound, :category, :url_args, :mutable_content
-    attr_accessor :expiration, :topic, :collapse_id
+    attr_accessor :expiration, :collapse_id
 
     ##
     # Create a new notification
     #
     # token: The Device token that the notification will be delivered to
     ##
-    def initialize(token)
+    def initialize(id, topic, token)
+      @id = id
       @token = token
-      @apns_id = SecureRandom.uuid
+      @topic = topic
+      @apns_id = id || SecureRandom.uuid
       @expiration = 0
       @content_available = false
       @priority = PRIORITY_DELIVER_IMMEDIATELY
@@ -78,33 +80,24 @@ module Lorkhan
 
     def alert=(alert)
       @alert = alert
-      if @alert
-        @content_available = false
-        @priority = PRIORITY_DELIVER_IMMEDIATELY
-      end
+      @priority = PRIORITY_DELIVER_IMMEDIATELY if @alert
     end
 
     def content_available=(content_available)
       @content_available = content_available
-      if content_available == true
-        @alert = nil
-        @priority = PRIORITY_DELIVER_BACKGROUND
-      end
+      @priority = PRIORITY_DELIVER_BACKGROUND if content_available == true
     end
 
     def to_h
       {}.tap do |root|
         root[:aps] = {}.tap do |aps|
-          if content_available
-            aps['content-available'] = 1
-          else
-            aps[:alert] = alert if alert
-            aps[:badge] = badge if badge
-            aps[:sound] = sound if sound
-          end
+          aps[:alert] = alert if alert
+          aps[:badge] = badge if badge
+          aps[:sound] = sound if sound
           aps[:category] = category if category
           aps['url-args'] = url_args if url_args
           aps['mutable-content'] = 1 if mutable_content
+          aps['content-available'] = 1 if content_available
         end
         root.merge!(custom_payload) if custom_payload
       end
