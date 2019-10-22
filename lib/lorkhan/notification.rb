@@ -73,7 +73,7 @@ module Lorkhan
     end
 
     def push_type
-      return 'background' if content_available == true
+      return 'background' if content_available == true && alert.nil?
 
       'alert'
     end
