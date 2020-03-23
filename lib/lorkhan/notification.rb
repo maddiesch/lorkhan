@@ -20,6 +20,7 @@ module Lorkhan
   # Optional attributes
   #
   #   - alert: The message displayed to the user.
+  #   - title: Title of the notification displayed to the user.
   #   - badge: The badge number displayed on the app icon.
   #   - category: The category for the notification.  Used to provide direct notification actions.
   #   - collapse_id: Used to group multiple notifications on the screen.
@@ -50,7 +51,7 @@ module Lorkhan
     DEFAULT_SOUND_NAME = 'default'.freeze
 
     attr_reader :token, :apns_id, :priority, :alert, :content_available, :topic
-    attr_accessor :custom_payload, :badge, :sound, :category, :url_args, :mutable_content
+    attr_accessor :custom_payload, :badge, :sound, :category, :url_args, :mutable_content, :title
     attr_accessor :expiration, :collapse_id
 
     ##
@@ -92,6 +93,7 @@ module Lorkhan
       {}.tap do |root|
         root[:aps] = {}.tap do |aps|
           aps[:alert] = alert if alert
+          aps[:title] = title if title
           aps[:badge] = badge if badge
           aps[:sound] = sound if sound
           aps[:category] = category if category
